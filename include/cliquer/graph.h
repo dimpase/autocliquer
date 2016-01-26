@@ -2,7 +2,7 @@
 #ifndef CLIQUER_GRAPH_H
 #define CLIQUER_GRAPH_H
 
-#include "set.h"
+#include "cliquer/set.h"
 
 typedef struct _graph_t graph_t;
 struct _graph_t {

@@ -7,7 +7,7 @@
 #include <getopt.h>
 #endif
 
-#include "cliquer.h"
+#include "cliquer/cliquer.h"
 
 
 #define TRYFORHELP  "Try `%s -h' for more information.\n",argv[0]

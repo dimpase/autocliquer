@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include "misc.h"
+#include "cliquer/misc.h"
 
 /*
  * Sets are arrays of setelement's (typically unsigned long int's) with

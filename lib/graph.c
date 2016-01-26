@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "graph.h"
+#include "cliquer/graph.h"
 
 
 static graph_t *graph_read_dimacs_binary(FILE *fp,char *firstline);

@@ -6,7 +6,7 @@
  * Licensed under the GNU GPL, read the file LICENSE for details.
  */
 
-#include "reorder.h"
+#include "cliquer/reorder.h"
 
 #include <time.h>
 #include <sys/times.h>

@@ -4,9 +4,9 @@
 
 #include <string.h>
 
-#include "set.h"
-#include "graph.h"
-#include "reorder.h"
+#include "cliquer/set.h"
+#include "cliquer/graph.h"
+#include "cliquer/reorder.h"
 
 typedef struct _clique_options clique_options;
 struct _clique_options {

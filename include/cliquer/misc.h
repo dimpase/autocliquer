@@ -2,7 +2,7 @@
 #ifndef CLIQUER_MISC_H
 #define CLIQUER_MISC_H
 
-#include "cliquerconf.h"
+#include "cliquer/cliquerconf.h"
 
 /*
  * We #define boolean instead of using a typedef because nauty.h uses it

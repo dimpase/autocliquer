@@ -2,8 +2,8 @@
 #ifndef CLIQUER_REORDER_H
 #define CLIQUER_REORDER_H
 
-#include "set.h"
-#include "graph.h"
+#include "cliquer/set.h"
+#include "cliquer/graph.h"
 
 extern void reorder_set(set_t s,int *order);
 extern void reorder_graph(graph_t *g, int *order);

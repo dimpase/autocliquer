@@ -13,7 +13,7 @@
 #include <sys/time.h>
 #include <sys/times.h>
 
-#include "cliquer.h"
+#include "cliquer/cliquer.h"
 
 
 /* Default cliquer options */
