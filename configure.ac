@@ -5,7 +5,7 @@ AC_PREREQ([2.67])
 AC_INIT([cliquer], [1.21], [dimpase@gmail.com])
 AM_INIT_AUTOMAKE
 LT_PREREQ([2.2])
-LT_INIT([dlopen,disable-shared,no-undefined])
+LT_INIT([dlopen,shared,no-undefined])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/cl.c])
 AC_CONFIG_HEADERS([config.h])
