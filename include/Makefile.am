@@ -1,1 +1,1 @@
-nobase_include_HEADERS = cliquer/cliquerconf.h cliquer/cliquer.h cliquer/graph.h cliquer/misc.h cliquer/reorder.h cliquer/set.h
+nobase_include_HEADERS = cliquer/cliquerconf.h cliquer/cliquer.h cliquer/graph.h cliquer/misc.h cliquer/reorder.h cliquer/set.h cliquer/testcase-large-exact8.h cliquer/testcase-large-w-60-64-mxml.h cliquer/testcase-large-over8.h cliquer/testcase-large-w-over60.h
