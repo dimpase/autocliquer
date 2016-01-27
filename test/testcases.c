@@ -69,10 +69,10 @@ int large_w_exact_62_cliques[][N] = {
 	{ 0 }
 };
 
-#include "cliquer/testcase-large-over8.h"
-#include "cliquer/testcase-large-exact8.h"
-#include "cliquer/testcase-large-w-over60.h"
-#include "cliquer/testcase-large-w-60-64-mxml.h"
+#include "testcase-large-over8.h"
+#include "testcase-large-exact8.h"
+#include "testcase-large-w-over60.h"
+#include "testcase-large-w-60-64-mxml.h"
 
 void test_single_clique(graph_t *g, int min_size, int max_size,
 			boolean maximal, int (*sets)[N]);
