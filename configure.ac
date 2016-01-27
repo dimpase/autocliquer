@@ -6,6 +6,14 @@ AC_INIT([cliquer], [1.21], [dimpase@gmail.com])
 AM_INIT_AUTOMAKE
 LT_PREREQ([2.2])
 LT_INIT([dlopen,shared,no-undefined])
+
+LT_CURRENT=1
+LT_REVISION=21
+LT_AGE=0
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/cl.c])
 AC_CONFIG_HEADERS([config.h])
