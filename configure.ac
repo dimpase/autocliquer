@@ -4,6 +4,7 @@
 AC_PREREQ([2.67])
 AC_INIT([cliquer], [1.21], [dimpase@gmail.com])
 AM_INIT_AUTOMAKE
+AM_MAINTAINER_MODE([enable])
 LT_PREREQ([2.2])
 LT_INIT([dlopen,shared,no-undefined])
 
