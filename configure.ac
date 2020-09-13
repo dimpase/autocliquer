@@ -1,8 +1,8 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.67])
-AC_INIT([cliquer], [1.21], [dimpase@gmail.com])
+AC_PREREQ([2.69])
+AC_INIT([cliquer], [1.22], [dimpase@gmail.com])
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE([enable])
 LT_PREREQ([2.2])
