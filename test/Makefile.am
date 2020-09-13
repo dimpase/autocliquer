@@ -1,4 +1,8 @@
 TESTS = testcases
+
+LOG_COMPILER = $(abs_srcdir)/testcases_wrapper.sh
+EXTRA_DIST = testcases_wrapper.sh
+
 check_HEADERS = testcase-large-exact8.h testcase-large-w-60-64-mxml.h testcase-large-over8.h testcase-large-w-over60.h
 check_PROGRAMS = testcases
 dist_pkgdata_DATA = testcase-large.b  testcase-large-w.b  testcase-small.a
