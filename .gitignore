@@ -5,6 +5,7 @@
 *.lo
 *.Plo
 *.la
+*.pc
 /m4
 .deps
 .libs

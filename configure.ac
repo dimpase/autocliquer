@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([cliquer], [1.22], [dimpase@gmail.com])
+AC_INIT([cliquer], [1.23], [dimpase@gmail.com])
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE([enable])
 LT_PREREQ([2.2])
@@ -25,7 +25,8 @@ AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AM_PROG_CC_C_O
 
-AC_CONFIG_FILES([Makefile src/Makefile lib/Makefile include/Makefile test/Makefile])
+PKG_INSTALLDIR
+AC_CONFIG_FILES([Makefile src/Makefile lib/Makefile include/Makefile test/Makefile libcliquer.pc])
 
 # Checks for header files.
 AC_CHECK_HEADERS(limits.h stddef.h stdlib.h string.h sys/time.h sys/times.h unistd.h ctype.h time.h getopt.h)
