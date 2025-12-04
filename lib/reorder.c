@@ -9,7 +9,9 @@
 #include "cliquer/reorder.h"
 
 #include <time.h>
+#if !defined(__MINGW64__)
 #include <sys/times.h>
+#endif
 #include <stdlib.h>
 
 #include <limits.h>
@@ -406,12 +408,18 @@ int *reorder_by_degree(graph_t *g, boolean weighted) {
  *       is called using the system time.
  */
 int *reorder_by_random(graph_t *g, boolean weighted) {
+#if !defined(__MINGW64__)
 	struct tms t;
+#endif
 	int i,r;
 	int *new;
 	boolean *used;
 
+#if !defined(__MINGW64__)
 	srand(times(&t)+time(NULL));
+#else
+	srand(time(NULL));
+#endif
 
 	new=calloc(g->n, sizeof(int));
 	used=calloc(g->n, sizeof(boolean));
