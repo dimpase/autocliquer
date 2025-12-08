@@ -385,7 +385,7 @@ int *reorder_by_degree(graph_t *g, boolean weighted) {
 		}
 		order[v]=maxvertex;
 		degree[maxvertex]=-1;  /* used */
-/*** Max. degree withing unselected graph:
+/*** Max. degree within unselected graph:
 		for (i=0; i < g->n; i++) {
 			if (GRAPH_IS_EDGE(g,maxvertex,i))
 				degree[i]--;
