@@ -11,7 +11,9 @@
 #include <limits.h>
 #include <unistd.h>
 #include <sys/time.h>
+#if !defined(__MINGW64__)
 #include <sys/times.h>
+#endif
 
 #include "cliquer/cliquer.h"
 
@@ -33,7 +35,9 @@ clique_options *clique_default_options=&clique_default_options_struct;
 static int *clique_size;      /* c[i] == max. clique size in {0,1,...,i-1} */
 static set_t current_clique;  /* Current clique being searched. */
 static set_t best_clique;     /* Largest/heaviest clique found so far. */
+#if !defined(__MINGW64__)
 static struct tms cputimer;      /* Timer for opts->time_function() */
+#endif
 static struct timeval realtimer; /* Timer for opts->time_function() */
 static int clique_list_count=0;  /* No. of cliques in opts->clique_list[] */
 static int weight_multiplier=1;  /* Weights multiplied by this when passing
@@ -52,6 +56,7 @@ static int temp_count=0;
  */
 static int entrance_level=0;  /* How many levels for entrance have occurred? */
 
+#if !defined(__MINGW64__)
 #define ENTRANCE_SAVE() \
 int *old_clique_size = clique_size;                     \
 set_t old_current_clique = current_clique;              \
@@ -75,10 +80,34 @@ temp_list = old_temp_list;                              \
 temp_count = old_temp_count;                            \
 memcpy(&cputimer,&old_cputimer,sizeof(struct tms));       \
 memcpy(&realtimer,&old_realtimer,sizeof(struct timeval));
+#else
+#define ENTRANCE_SAVE() \
+int *old_clique_size = clique_size;                     \
+set_t old_current_clique = current_clique;              \
+set_t old_best_clique = best_clique;                    \
+int old_clique_list_count = clique_list_count;          \
+int old_weight_multiplier = weight_multiplier;          \
+int **old_temp_list = temp_list;                        \
+int old_temp_count = temp_count;                        \
+struct timeval old_realtimer;                           \
+memcpy(&old_realtimer,&realtimer,sizeof(struct timeval));
+
+#define ENTRANCE_RESTORE() \
+clique_size = old_clique_size;                          \
+current_clique = old_current_clique;                    \
+best_clique = old_best_clique;                          \
+clique_list_count = old_clique_list_count;              \
+weight_multiplier = old_weight_multiplier;              \
+temp_list = old_temp_list;                              \
+temp_count = old_temp_count;                            \
+memcpy(&realtimer,&old_realtimer,sizeof(struct timeval));
+#endif
 
 
 /* Number of clock ticks per second (as returned by sysconf(_SC_CLK_TCK)) */
+#if !defined(__MINGW64__)
 static int clocks_per_sec=0;
+#endif
 
 
 
@@ -138,7 +167,9 @@ static boolean false_function(set_t clique,graph_t *g,clique_options *opts);
  */
 static int unweighted_clique_search_single(int *table, int min_size,
 					   graph_t *g, clique_options *opts) {
+#if !defined(__MINGW64__)
 	struct tms tms;
+#endif
 	struct timeval timeval;
 	int i,j;
 	int v,w;
@@ -179,13 +210,19 @@ static int unweighted_clique_search_single(int *table, int min_size,
 
 		if (opts && opts->time_function) {
 			gettimeofday(&timeval,NULL);
+#if !defined(__MINGW64__)
 			times(&tms);
+#endif
 			if (!opts->time_function(entrance_level,
 						 i+1,g->n,clique_size[v] *
 						 weight_multiplier,
+#if !defined(__MINGW64__)
 						 (double)(tms.tms_utime-
 							  cputimer.tms_utime)/
 						 clocks_per_sec,
+#else
+						 0,
+#endif
 						 timeval.tv_sec-
 						 realtimer.tv_sec+
 						 (double)(timeval.tv_usec-
@@ -335,7 +372,9 @@ static int unweighted_clique_search_all(int *table, int start,
 					boolean maximal, graph_t *g,
 					clique_options *opts) {
 	struct timeval timeval;
+#if !defined(__MINGW64__)
 	struct tms tms;
+#endif
 	int i,j;
 	int v;
 	int *newtable;
@@ -376,13 +415,19 @@ static int unweighted_clique_search_all(int *table, int start,
 
 		if (opts->time_function) {
 			gettimeofday(&timeval,NULL);
+#if !defined(__MINGW64__)
 			times(&tms);
+#endif
 			if (!opts->time_function(entrance_level,
 						 i+1,g->n,min_size *
 						 weight_multiplier,
+#if !defined(__MINGW64__)
 						 (double)(tms.tms_utime-
 							  cputimer.tms_utime)/
 						 clocks_per_sec,
+#else
+						 0,
+#endif
 						 timeval.tv_sec-
 						 realtimer.tv_sec+
 						 (double)(timeval.tv_usec-
@@ -539,7 +584,9 @@ static int weighted_clique_search_single(int *table, int min_weight,
 					 int max_weight, graph_t *g,
 					 clique_options *opts) {
 	struct timeval timeval;
+#if !defined(__MINGW64__)
 	struct tms tms;
+#endif
 	int i,j;
 	int v;
 	int *newtable;
@@ -629,13 +676,19 @@ static int weighted_clique_search_single(int *table, int min_weight,
 
 		if (opts->time_function) {
 			gettimeofday(&timeval,NULL);
+#if !defined(__MINGW64__)
 			times(&tms);
+#endif
 			if (!opts->time_function(entrance_level,
 						 i+1,g->n,clique_size[v] *
 						 weight_multiplier,
+#if !defined(__MINGW64__)
 						 (double)(tms.tms_utime-
 							  cputimer.tms_utime)/
 						 clocks_per_sec,
+#else
+						 0,
+#endif
 						 timeval.tv_sec-
 						 realtimer.tv_sec+
 						 (double)(timeval.tv_usec-
@@ -687,7 +740,9 @@ static int weighted_clique_search_all(int *table, int start,
 				      boolean maximal, graph_t *g,
 				      clique_options *opts) {
 	struct timeval timeval;
+#if !defined(__MINGW64__)
 	struct tms tms;
+#endif
 	int i,j;
 	int v;
 	int *newtable;
@@ -730,13 +785,19 @@ static int weighted_clique_search_all(int *table, int start,
 
 		if (opts->time_function) {
 			gettimeofday(&timeval,NULL);
+#if !defined(__MINGW64__)
 			times(&tms);
+#endif
 			if (!opts->time_function(entrance_level,
 						 i+1,g->n,clique_size[v] *
 						 weight_multiplier,
+#if !defined(__MINGW64__)
 						 (double)(tms.tms_utime-
 							  cputimer.tms_utime)/
 						 clocks_per_sec,
+#else
+						 0,
+#endif
 						 timeval.tv_sec-
 						 realtimer.tv_sec+
 						 (double)(timeval.tv_usec-
@@ -1106,9 +1167,11 @@ set_t clique_unweighted_find_single(graph_t *g,int min_size,int max_size,
 		return NULL;
 	}
 
+#if !defined(__MINGW64__)
 	if (clocks_per_sec==0)
 		clocks_per_sec=sysconf(_SC_CLK_TCK);
 	ASSERT(clocks_per_sec>0);
+#endif
 
 	/* Dynamic allocation */
 	current_clique=set_new(g->n);
@@ -1119,7 +1182,9 @@ set_t clique_unweighted_find_single(graph_t *g,int min_size,int max_size,
 
 	/* "start clock" */
 	gettimeofday(&realtimer,NULL);
+#if !defined(__MINGW64__)
 	times(&cputimer);
+#endif
 
 	/* reorder */
 	if (opts->reorder_function) {
@@ -1230,9 +1295,11 @@ int clique_unweighted_find_all(graph_t *g, int min_size, int max_size,
 		return 0;
 	}
 
+#if !defined(__MINGW64__)
 	if (clocks_per_sec==0)
 		clocks_per_sec=sysconf(_SC_CLK_TCK);
 	ASSERT(clocks_per_sec>0);
+#endif
 
 	/* Dynamic allocation */
 	current_clique=set_new(g->n);
@@ -1246,7 +1313,9 @@ int clique_unweighted_find_all(graph_t *g, int min_size, int max_size,
 
 	/* "start clock" */
 	gettimeofday(&realtimer,NULL);
+#if !defined(__MINGW64__)
 	times(&cputimer);
+#endif
 
 	/* reorder */
 	if (opts->reorder_function) {
@@ -1380,9 +1449,11 @@ set_t clique_find_single(graph_t *g,int min_weight,int max_weight,
 		return NULL;
 	}
 
+#if !defined(__MINGW64__)
 	if (clocks_per_sec==0)
 		clocks_per_sec=sysconf(_SC_CLK_TCK);
 	ASSERT(clocks_per_sec>0);
+#endif
 
 	/* Check whether we can use unweighted routines. */
 	if (!graph_weighted(g)) {
@@ -1417,7 +1488,9 @@ set_t clique_find_single(graph_t *g,int min_weight,int max_weight,
 
 	/* "start clock" */
 	gettimeofday(&realtimer,NULL);
+#if !defined(__MINGW64__)
 	times(&cputimer);
+#endif
 
 	/* reorder */
 	if (opts->reorder_function) {
@@ -1539,9 +1612,11 @@ int clique_find_all(graph_t *g, int min_weight, int max_weight,
 		return 0;
 	}
 
+#if !defined(__MINGW64__)
 	if (clocks_per_sec==0)
 		clocks_per_sec=sysconf(_SC_CLK_TCK);
 	ASSERT(clocks_per_sec>0);
+#endif
 
 	if (!graph_weighted(g)) {
 		min_weight=DIV_UP(min_weight,g->weights[0]);
@@ -1573,7 +1648,9 @@ int clique_find_all(graph_t *g, int min_weight, int max_weight,
 
 	/* "start clock" */
 	gettimeofday(&realtimer,NULL);
+#if !defined(__MINGW64__)
 	times(&cputimer);
+#endif
 
 	/* reorder */
 	if (opts->reorder_function) {
